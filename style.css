@@ -136,8 +136,8 @@ button {
   transition: 0.4s;
 }
 
-.page a:hover,
-.page a:active {
+.page a:not(.kofi-button):hover,
+.page a:not(.kofi-button):active {
   -webkit-transform: rotate(-10deg);
   -ms-transform: rotate(-10deg);
   transform: rotate(-10deg);
