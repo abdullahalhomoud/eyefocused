@@ -338,39 +338,33 @@ button {
   top: 2px;
 }
 
-.kofi-button-wrapper {
+.kofi-button {
   position: absolute;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
   height: 40px;
   right: 0;
   margin-top: 20px;
   border: 1px solid;
   padding: 0 12px;
-  background-color: var(--first-color);
   color: var(--fourth-color);
   -webkit-transition: 0.4s;
   -o-transition: 0.4s;
   transition: 0.4s;
 }
 
-.kofi-button-wrapper:hover {
+.kofi-button:hover {
   opacity: 0.75;
 }
 
-#kofi-button {
+#kofi-button-text {
+  display: inline-block;
   position: relative;
   top: 50%;
-  border: none;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-  background-color: transparent;
-  color: var(--fourth-color);
-  font-family: "Arial", sans-serif;
   font-weight: bold;
-  font-size: 1rem;
-  -webkit-transition: 0.4s;
-  -o-transition: 0.4s;
-  transition: 0.4s;
 }
 
 .kofi-image {
@@ -694,7 +688,7 @@ button {
 }
 
 @media screen and (min-width: 575px) {
-  #kofi-button:after {
+  #kofi-button-text:after {
     content: " on Ko-fi";
   }
 
