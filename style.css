@@ -146,9 +146,6 @@ button {
   line-height: 1.25;
   margin-bottom: 30px;
   font-family: "Arial", sans-serif;
-  -webkit-hyphens: auto;
-  -ms-hyphens: auto;
-  hyphens: auto;
 }
 
 .page-text b {
