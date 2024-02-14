@@ -1,6 +1,6 @@
-const navButtons = document.querySelectorAll(".nav-button");
-const pagesContainer = document.querySelector(".pages-container");
-const numberOfnavButtons = navButtons.length;
+var navButtons = document.querySelectorAll(".nav-button");
+var pagesContainer = document.querySelector(".pages-container");
+var numberOfnavButtons = navButtons.length;
 
 // Navigate to page that corresponds to clicked-on button
 navButtons.forEach((navButton, index) => {
@@ -239,6 +239,13 @@ function submitTextFunction() {
     } else {
       focusLine.style.paddingBottom = "";
     }
+
+    // Replace <br> tags with </div><div> to wrap paragraphs inside <div> tags
+    // (Because Firefox divides paragraphs by <br> rather than <div>)
+    var submittedTextInnerHTML = submittedText.innerHTML;
+    var newText = submittedTextInnerHTML.replace(/<br>/g, "</div><div>");
+    newText = "<div>" + newText + "</div>";
+    document.getElementById("submitted-text").innerHTML = newText;
 
     // Add class to paragraphs for paragraph mode when text is submitted
     var submittedTextDivs = submittedText.querySelectorAll("div");
@@ -753,9 +760,9 @@ function arrowKeyHandler(event) {
 
 // Add hover effect to links (to differentiate between hover and touch, so that
 // hover can end after touch when user navigates outside the document.)
-const links = document.querySelectorAll(".link");
-const kofiButton = document.querySelector(".kofi-button");
-const linksAndKofiButton = Array.from(links).concat(kofiButton);
+var links = document.querySelectorAll(".link");
+var kofiButton = document.querySelector(".kofi-button");
+var linksAndKofiButton = Array.from(links).concat(kofiButton);
 
 linksAndKofiButton.forEach((linkOrKofiButton) => {
   linkOrKofiButton.addEventListener("mouseover", hoverEffect);
