@@ -1,6 +1,6 @@
-var navButtons = document.querySelectorAll(".nav-button");
-var pagesContainer = document.querySelector(".pages-container");
-var numberOfnavButtons = navButtons.length;
+const navButtons = document.querySelectorAll(".nav-button");
+const pagesContainer = document.querySelector(".pages-container");
+const numberOfnavButtons = navButtons.length;
 
 // Navigate to page that corresponds to clicked-on button
 navButtons.forEach((navButton, index) => {
@@ -750,3 +750,28 @@ function arrowKeyHandler(event) {
     event.preventDefault();
   }
 }
+
+// Add hover effect to links (to differentiate between hover and touch, so that
+// hover can end after touch when user navigates outside the document.)
+const links = document.querySelectorAll(".link");
+const kofiButton = document.querySelector(".kofi-button");
+const linksAndKofiButton = Array.from(links).concat(kofiButton);
+
+linksAndKofiButton.forEach((linkOrKofiButton) => {
+  linkOrKofiButton.addEventListener("mouseover", hoverEffect);
+  linkOrKofiButton.addEventListener("mouseout", unhoverEffect);
+  linkOrKofiButton.addEventListener("touchstart", hoverEffect);
+  linkOrKofiButton.addEventListener("touchend", () => {
+    setTimeout(function () {
+      unhoverEffect();
+    }, 400);
+  });
+
+  function hoverEffect() {
+    linkOrKofiButton.classList.add("hovered");
+  }
+
+  function unhoverEffect() {
+    linkOrKofiButton.classList.remove("hovered");
+  }
+});
