@@ -250,9 +250,19 @@ function submitTextFunction() {
     // Add class to paragraphs for paragraph mode when text is submitted
     var submittedTextDivs = submittedText.querySelectorAll("div");
     submittedTextDivs.forEach((submittedTextDiv) => {
+      // Check if the submittedTextDiv has any text
       var hasText = submittedTextDiv.textContent.trim().length > 0;
-      if (hasText) {
+
+      // Check if the submittedTextDiv has any child divs
+      const hasChildDivs = Array.from(submittedTextDiv.children).some(
+        (child) => child.tagName.toLowerCase() === "div"
+      );
+      // If the submittedTextDiv has text and no child divs, it's a paragraph (add 'paragraph' class)
+      // If it has no text, it's not a paragraph (remove it)
+      if (hasText && !hasChildDivs) {
         submittedTextDiv.classList.add("paragraph");
+      } else if (!hasText) {
+        submittedTextDiv.parentNode.removeChild(submittedTextDiv);
       }
     });
 
