@@ -164,10 +164,6 @@ button {
   margin-top: 70px; /* same as height of #top-blur-for-focus-line */
 }
 
-#submitted-text div:not(.paragraph):not(.page-text) {
-  display: none;
-}
-
 .paragraph {
   -webkit-transition: 0.5s;
   -o-transition: 0.5s;
