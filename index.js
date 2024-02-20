@@ -227,14 +227,14 @@ function submitTextFunction() {
     submittedText.style.marginBottom = "50vh";
 
     // Change size of focus line when text is submitted
-    const selectedFontSizePx = document.querySelector(
+    let selectedFontSize = document.querySelector(
       "#custom-select-font-sizes .select-selected"
     ).innerHTML;
     const selectedLineHeight = document.querySelector(
       "#custom-select-line-heights .select-selected"
     ).innerHTML;
 
-    const selectedFontSize = selectedFontSizePx.replace("px", "");
+    selectedFontSize = selectedFontSizePx.replace("px", "");
     focusLine.style.height = selectedFontSize * selectedLineHeight + "px";
 
     // Add padding-bottom of 1px to focus line if line height of submitted text is 1.25
@@ -314,7 +314,7 @@ const fontSizes = document.querySelector(
 const focusLine = document.querySelector("#focus-line");
 
 fontSizes.onclick = function () {
-  const selectedFontSizePx = document.querySelector(
+  let selectedFontSize = document.querySelector(
     "#custom-select-font-sizes .select-selected"
   ).innerHTML;
   const selectedLineHeight = document.querySelector(
@@ -325,7 +325,7 @@ fontSizes.onclick = function () {
   submittedText.style.fontSize = selectedFontSize;
 
   // Change size of focus line when font size is changed
-  const selectedFontSize = selectedFontSizePx.replace("px", "");
+  selectedFontSize = selectedFontSizePx.replace("px", "");
   focusLine.style.height = selectedFontSize * selectedLineHeight + "px";
 };
 
@@ -333,7 +333,7 @@ const lineHeights = document.querySelector(
   "#custom-select-line-heights .select-items"
 );
 lineHeights.onclick = function () {
-  const selectedFontSizePx = document.querySelector(
+  let selectedFontSize = document.querySelector(
     "#custom-select-font-sizes .select-selected"
   ).innerHTML;
   const selectedLineHeight = document.querySelector(
@@ -344,7 +344,7 @@ lineHeights.onclick = function () {
   submittedText.style.lineHeight = selectedLineHeight;
 
   // Change size of focus line when line height is changed
-  const selectedFontSize = selectedFontSizePx.replace("px", "");
+  selectedFontSize = selectedFontSizePx.replace("px", "");
   focusLine.style.height = selectedFontSize * selectedLineHeight + "px";
 
   // Add padding-bottom to focus line of 1px if line height of submitted text is 1.25
@@ -383,14 +383,14 @@ const numericValueOfSubmittedTextMarginTop = parseInt(
 let buttonCounter = numericValueOfInitialHeightOfTopBlur;
 
 function lineModeUpButtonFunction() {
-  const selectedFontSizePx = document.querySelector(
+  let selectedFontSize = document.querySelector(
     "#custom-select-font-sizes .select-selected"
   ).innerHTML;
   const selectedLineHeight = document.querySelector(
     "#custom-select-line-heights .select-selected"
   ).innerHTML;
 
-  const selectedFontSize = selectedFontSizePx.replace("px", "");
+  selectedFontSize = selectedFontSizePx.replace("px", "");
   const focusLineHeight = selectedFontSize * selectedLineHeight;
   if (buttonCounter > numericValueOfSubmittedTextMarginTop) {
     buttonCounter -= focusLineHeight;
@@ -448,14 +448,14 @@ function lineModeDownButtonFunction() {
       heightOfVisiblePage - numericValueOfFocusLineHeight * 2;
   }
 
-  const selectedFontSizePx = document.querySelector(
+  let selectedFontSize = document.querySelector(
     "#custom-select-font-sizes .select-selected"
   ).innerHTML;
   const selectedLineHeight = document.querySelector(
     "#custom-select-line-heights .select-selected"
   ).innerHTML;
 
-  const selectedFontSize = selectedFontSizePx.replace("px", "");
+  selectedFontSize = selectedFontSizePx.replace("px", "");
   focusLineHeight = selectedFontSize * selectedLineHeight;
   if (buttonCounter + 1 < bottomLimitOfFocusLine) {
     // (Add 1 to make up for 0.5 increments when the font size is an odd number and the line height is 1.5.)
