@@ -1,11 +1,11 @@
-var navButtons = document.querySelectorAll(".nav-button");
-var pagesContainer = document.querySelector(".pages-container");
-var numberOfnavButtons = navButtons.length;
+const navButtons = document.querySelectorAll(".nav-button");
+const pagesContainer = document.querySelector(".pages-container");
+const numberOfnavButtons = navButtons.length;
 
 // Navigate to page that corresponds to clicked-on button
 navButtons.forEach((navButton, index) => {
   navButton.onclick = function () {
-    var leftPosition = index * 100;
+    const leftPosition = index * 100;
     pagesContainer.style.left = "-" + leftPosition + "vw";
     for (let i = 0; i < numberOfnavButtons; i++) {
       if (navButtons[index] === navButtons[i]) {
@@ -19,10 +19,10 @@ navButtons.forEach((navButton, index) => {
 
 // Function to navigate to hash location
 function navigateToHashLocation() {
-  var targetLocation = window.location.hash;
+  const targetLocation = window.location.hash;
   for (let i = 0; i < numberOfnavButtons; i++) {
     if (navButtons[i].hash === targetLocation) {
-      var leftPosition = i * 100;
+      const leftPosition = i * 100;
       pagesContainer.style.left = "-" + leftPosition + "vw";
       navButtons[i].style.fill = "var(--fourth-color)";
     } else {
@@ -38,14 +38,17 @@ window.addEventListener("load", navigateToHashLocation);
 window.addEventListener("popstate", navigateToHashLocation);
 
 // Prevent transition of pages container during resizing
+let resizeTimeout; // Declaring resizeTimeout outside the event listener function
+
 window.addEventListener("resize", function () {
-  var pagesContainer = document.querySelector(".pages-container");
+  const pagesContainer = document.querySelector(".pages-container");
   pagesContainer.style.WebkitTransition = "none";
   pagesContainer.style.OTransition = "none";
   pagesContainer.style.transition = "none";
 
   clearTimeout(resizeTimeout);
-  var resizeTimeout = setTimeout(function () {
+  resizeTimeout = setTimeout(function () {
+    // Using the previously declared resizeTimeout
     pagesContainer.style.WebkitTransition = "";
     pagesContainer.style.OTransition = "";
     pagesContainer.style.transition = "";
@@ -54,14 +57,14 @@ window.addEventListener("resize", function () {
 
 // Create custom select items
 //Look for any elements with the class "custom-select"
-var customSelects = document.querySelectorAll(".custom-select");
+const customSelects = document.querySelectorAll(".custom-select");
 numberOfCustomSelects = customSelects.length;
 
 for (let i = 0; i < numberOfCustomSelects; i++) {
   selectElements = customSelects[i].getElementsByTagName("select")[0];
-  var numberOfSelectElements = selectElements.length;
+  const numberOfSelectElements = selectElements.length;
   //For each element, create a new div that will act as the selected item
-  var selectedItemDiv = document.createElement("div");
+  const selectedItemDiv = document.createElement("div");
 
   selectedItemDiv.setAttribute("class", "select-selected");
   selectedItemDiv.innerHTML =
@@ -69,29 +72,29 @@ for (let i = 0; i < numberOfCustomSelects; i++) {
   customSelects[i].appendChild(selectedItemDiv);
 
   // For each element, create a new div that will contain the option list
-  var optionListDiv = document.createElement("div");
+  const optionListDiv = document.createElement("div");
   optionListDiv.setAttribute("class", "select-items select-hide");
 
   for (let j = 0; j < numberOfSelectElements; j++) {
     // For each option in the original select element,
     // create a new div that will act as an option item
-    var optionItemDiv = document.createElement("div");
+    const optionItemDiv = document.createElement("div");
     optionItemDiv.innerHTML = selectElements.options[j].innerHTML;
 
     optionItemDiv.addEventListener("click", function (e) {
       //When an item is clicked, update the original select box,
       //and the selected item
-      var selectElements =
+      const selectElements =
         this.parentNode.parentNode.getElementsByTagName("select")[0];
-      var numberOfSelectElements = selectElements.length;
-      var selected = this.parentNode.previousSibling;
+      const numberOfSelectElements = selectElements.length;
+      const selected = this.parentNode.previousSibling;
       for (let i = 0; i < numberOfSelectElements; i++) {
         if (selectElements.options[i].innerHTML == this.innerHTML) {
           selectElements.selectedIndex = i;
           selected.innerHTML = this.innerHTML;
-          var sameAsSelected =
+          const sameAsSelected =
             this.parentNode.getElementsByClassName("same-as-selected");
-          var numberOfSameAsSelected = sameAsSelected.length;
+          const numberOfSameAsSelected = sameAsSelected.length;
           for (let k = 0; k < numberOfSameAsSelected; k++) {
             sameAsSelected[k].removeAttribute("class");
           }
@@ -113,14 +116,14 @@ for (let i = 0; i < numberOfCustomSelects; i++) {
     this.classList.toggle("select-arrow-active");
     this.nextSibling.classList.toggle("select-show");
     if (this.nextSibling.classList.contains("select-show")) {
-      var optionItemDivs = Array.from(this.nextElementSibling.children);
+      const optionItemDivs = Array.from(this.nextElementSibling.children);
       optionItemDivs.forEach((optionItemDiv, index) => {
         setTimeout(function () {
           optionItemDiv.classList.add("show-menu-item");
         }, index * 100);
       });
     } else {
-      var optionItemDivs = Array.from(this.nextElementSibling.children);
+      const optionItemDivs = Array.from(this.nextElementSibling.children);
       optionItemDivs.forEach((optionItemDiv) => {
         optionItemDiv.classList.remove("show-menu-item");
       });
@@ -130,11 +133,11 @@ for (let i = 0; i < numberOfCustomSelects; i++) {
 function closeAllSelects(element) {
   // A function that will close all select boxes in the document,
   // except the current select box
-  var arrayNumber = [];
-  var optionListDivs = document.getElementsByClassName("select-items");
-  var selectedItems = document.getElementsByClassName("select-selected");
-  var numberOfoptionListDivs = optionListDivs.length;
-  var numberOfSelectedItems = selectedItems.length;
+  const arrayNumber = [];
+  const optionListDivs = document.querySelectorAll(".select-items");
+  const selectedItems = document.getElementsByClassName("select-selected");
+  const numberOfoptionListDivs = optionListDivs.length;
+  const numberOfSelectedItems = selectedItems.length;
   for (let i = 0; i < numberOfSelectedItems; i++) {
     if (element == selectedItems[i]) {
       arrayNumber.push(i);
@@ -149,9 +152,8 @@ function closeAllSelects(element) {
     }
   }
   // Remove '.show-menu-item' if user clicks outside the box
-  var optionListDivs = document.querySelectorAll(".select-items");
   optionListDivs.forEach((optionListDiv) => {
-    var optionItemDivs = optionListDiv.querySelectorAll("div");
+    const optionItemDivs = optionListDiv.querySelectorAll("div");
     optionItemDivs.forEach((optionItemDiv) => {
       optionItemDiv.classList.remove("show-menu-item");
     });
@@ -162,18 +164,18 @@ function closeAllSelects(element) {
 document.addEventListener("click", closeAllSelects);
 
 customSelects.forEach((customSelect) => {
-  var selectElement = customSelect.querySelector("select");
+  const selectElement = customSelect.querySelector("select");
 
   // Make each custom-select div have a class based on the ID of the default/hidden select menu,
   // eg. the custom-select div of fonts has the class custom-select-fonts
-  var selectId = selectElement.id;
+  const selectId = selectElement.id;
   customSelect.setAttribute("id", "custom-select-" + selectId);
 
   // Before user selects an option, make the item in the dropdown menu that
   // corresponds with the default selection take the class "same-as-selected"
-  var selected = customSelect.querySelector(".select-selected");
-  var optionItemDivs = customSelect.querySelectorAll(".select-items div");
-  var numberOfOptionItemDivs = optionItemDivs.length;
+  const selected = customSelect.querySelector(".select-selected");
+  const optionItemDivs = customSelect.querySelectorAll(".select-items div");
+  const numberOfOptionItemDivs = optionItemDivs.length;
   for (let i = 0; i < numberOfOptionItemDivs; i++) {
     if (selected.innerHTML === optionItemDivs[i].innerHTML) {
       optionItemDivs[i].setAttribute("class", "same-as-selected");
@@ -182,10 +184,10 @@ customSelects.forEach((customSelect) => {
 });
 
 // Apply styling to text
-var editorButtons = document.querySelectorAll(".editor-button");
+const editorButtons = document.querySelectorAll(".editor-button");
 
 function editorButtonsFunction() {
-  let command = this.dataset["element"];
+  const command = this.dataset["element"];
   document.execCommand(command, false, null);
 }
 
@@ -195,26 +197,28 @@ editorButtons.forEach((editorButton) => {
 });
 
 // Submit typed text & add blur for line mode
-var previewContent = document.querySelector("#preview-content");
-var containerForFocusLine = document.querySelector("#container-for-focus-line");
+const previewContent = document.querySelector("#preview-content");
+const containerForFocusLine = document.querySelector(
+  "#container-for-focus-line"
+);
 
-var editor = document.querySelector("#editor");
-var submittedText = document.querySelector("#submitted-text");
-var submitButton = document.querySelector("#submit-button");
+const editor = document.querySelector("#editor");
+const submittedText = document.querySelector("#submitted-text");
+const submitButton = document.querySelector("#submit-button");
 
 function submitTextFunction() {
   // When submit button is clicked, wrap div around first paragraph (like the rest of the paragraphs) and submit text
-  var content = editor.innerHTML;
-  var submittedParagraphs = content.split("<br>");
-  var firstParagraph = submittedParagraphs.shift(); // Remove the first paragraph from the array
-  var wrappedFirstParagraph = "<div>" + firstParagraph + "</div>";
-  var modifiedContent =
+  const content = editor.innerHTML;
+  const submittedParagraphs = content.split("<br>");
+  const firstParagraph = submittedParagraphs.shift(); // Remove the first paragraph from the array
+  const wrappedFirstParagraph = "<div>" + firstParagraph + "</div>";
+  const modifiedContent =
     wrappedFirstParagraph + submittedParagraphs.join("<br>");
   submittedText.innerHTML = modifiedContent;
 
   // Display preview of text, with limit of 50 words.
-  var words = editor.innerHTML.split(" ");
-  var limitedWords = words.slice(0, 50).join(" ");
+  const words = editor.innerHTML.split(" ");
+  const limitedWords = words.slice(0, 50).join(" ");
   previewContent.innerHTML = limitedWords;
 
   editor.innerHTML = "";
@@ -223,14 +227,14 @@ function submitTextFunction() {
     submittedText.style.marginBottom = "50vh";
 
     // Change size of focus line when text is submitted
-    var selectedFontSize = document.querySelector(
+    const selectedFontSizePx = document.querySelector(
       "#custom-select-font-sizes .select-selected"
     ).innerHTML;
-    var selectedLineHeight = document.querySelector(
+    const selectedLineHeight = document.querySelector(
       "#custom-select-line-heights .select-selected"
     ).innerHTML;
 
-    selectedFontSize = selectedFontSize.replace("px", "");
+    const selectedFontSize = selectedFontSizePx.replace("px", "");
     focusLine.style.height = selectedFontSize * selectedLineHeight + "px";
 
     // Add padding-bottom of 1px to focus line if line height of submitted text is 1.25
@@ -242,16 +246,16 @@ function submitTextFunction() {
 
     // Replace <br> tags with </div><div> to wrap paragraphs inside <div> tags
     // (Because Firefox divides paragraphs by <br> rather than <div>)
-    var submittedTextInnerHTML = submittedText.innerHTML;
-    var newText = submittedTextInnerHTML.replace(/<br>/g, "</div><div>");
+    const submittedTextInnerHTML = submittedText.innerHTML;
+    let newText = submittedTextInnerHTML.replace(/<br>/g, "</div><div>");
     newText = "<div>" + newText + "</div>";
     document.getElementById("submitted-text").innerHTML = newText;
 
     // Add class to paragraphs for paragraph mode when text is submitted
-    var submittedTextDivs = submittedText.querySelectorAll("div");
+    const submittedTextDivs = submittedText.querySelectorAll("div");
     submittedTextDivs.forEach((submittedTextDiv) => {
       // Check if the submittedTextDiv has any text
-      var hasText = submittedTextDiv.textContent.trim().length > 0;
+      const hasText = submittedTextDiv.textContent.trim().length > 0;
 
       // Check if the submittedTextDiv has any child divs
       const hasChildDivs = Array.from(submittedTextDiv.children).some(
@@ -279,14 +283,14 @@ editor.addEventListener("paste", function (e) {
   e.preventDefault();
 
   // Get text representation of clipboard
-  var text = (e.originalEvent || e).clipboardData.getData("text/plain");
+  const text = (e.originalEvent || e).clipboardData.getData("text/plain");
 
   // insert text manually
   document.execCommand("insertText", false, text);
 });
 
 // Change font of dropdown menu items to correspond to each option.
-var fontNames = document.querySelectorAll(
+const fontNames = document.querySelectorAll(
   "#custom-select-fonts .select-items div"
 );
 fontNames.forEach((fontName) => {
@@ -294,9 +298,9 @@ fontNames.forEach((fontName) => {
 });
 
 // Change font of preview and submitted text + change font of selected font to correspond to the selected font
-var fonts = document.querySelector("#custom-select-fonts .select-items");
+const fonts = document.querySelector("#custom-select-fonts .select-items");
 fonts.onclick = function () {
-  var selectedFont = document.querySelector(
+  const selectedFont = document.querySelector(
     "#custom-select-fonts .select-selected"
   );
   previewContent.style.fontFamily = selectedFont.innerHTML;
@@ -304,16 +308,16 @@ fonts.onclick = function () {
   selectedFont.style.fontFamily = selectedFont.innerHTML;
 };
 
-var fontSizes = document.querySelector(
+const fontSizes = document.querySelector(
   "#custom-select-font-sizes .select-items"
 );
-var focusLine = document.querySelector("#focus-line");
+const focusLine = document.querySelector("#focus-line");
 
 fontSizes.onclick = function () {
-  var selectedFontSize = document.querySelector(
+  const selectedFontSizePx = document.querySelector(
     "#custom-select-font-sizes .select-selected"
   ).innerHTML;
-  var selectedLineHeight = document.querySelector(
+  const selectedLineHeight = document.querySelector(
     "#custom-select-line-heights .select-selected"
   ).innerHTML;
   // Change font size of preview and submitted text
@@ -321,18 +325,18 @@ fontSizes.onclick = function () {
   submittedText.style.fontSize = selectedFontSize;
 
   // Change size of focus line when font size is changed
-  selectedFontSize = selectedFontSize.replace("px", "");
+  const selectedFontSize = selectedFontSizePx.replace("px", "");
   focusLine.style.height = selectedFontSize * selectedLineHeight + "px";
 };
 
-var lineHeights = document.querySelector(
+const lineHeights = document.querySelector(
   "#custom-select-line-heights .select-items"
 );
 lineHeights.onclick = function () {
-  var selectedFontSize = document.querySelector(
+  const selectedFontSizePx = document.querySelector(
     "#custom-select-font-sizes .select-selected"
   ).innerHTML;
-  var selectedLineHeight = document.querySelector(
+  const selectedLineHeight = document.querySelector(
     "#custom-select-line-heights .select-selected"
   ).innerHTML;
   // Change line height of preview and submitted text
@@ -340,7 +344,7 @@ lineHeights.onclick = function () {
   submittedText.style.lineHeight = selectedLineHeight;
 
   // Change size of focus line when line height is changed
-  selectedFontSize = selectedFontSize.replace("px", "");
+  const selectedFontSize = selectedFontSizePx.replace("px", "");
   focusLine.style.height = selectedFontSize * selectedLineHeight + "px";
 
   // Add padding-bottom to focus line of 1px if line height of submitted text is 1.25
@@ -352,46 +356,42 @@ lineHeights.onclick = function () {
 };
 
 // Change mode
-var modes = document.querySelector("#custom-select-modes .select-items");
+const modes = document.querySelector("#custom-select-modes .select-items");
 modes.addEventListener("click", selectedModeFunction);
 
 // Function for line mode up button
-var topBlurForFocusLine = document.querySelector("#top-blur-for-focus-line");
-var initialHeightOfTopBlur = window
+const topBlurForFocusLine = document.querySelector("#top-blur-for-focus-line");
+const initialHeightOfTopBlur = window
   .getComputedStyle(topBlurForFocusLine, null)
   .getPropertyValue("height");
-var numbersOnlyStringOfInitialHeightOfTopBlur = initialHeightOfTopBlur.replace(
-  /\D/g,
-  ""
-);
-var numericValueOfInitialHeightOfTopBlur = parseInt(
+const numbersOnlyStringOfInitialHeightOfTopBlur =
+  initialHeightOfTopBlur.replace(/\D/g, "");
+const numericValueOfInitialHeightOfTopBlur = parseInt(
   numbersOnlyStringOfInitialHeightOfTopBlur,
   10
 );
 
-var submittedTextMarginTop = window
+const submittedTextMarginTop = window
   .getComputedStyle(submittedText, null)
   .getPropertyValue("margin-top");
-var numbersOnlyStringOfSubmittedTextMarginTop = submittedTextMarginTop.replace(
-  /\D/g,
-  ""
-);
-var numericValueOfSubmittedTextMarginTop = parseInt(
+const numbersOnlyStringOfSubmittedTextMarginTop =
+  submittedTextMarginTop.replace(/\D/g, "");
+const numericValueOfSubmittedTextMarginTop = parseInt(
   numbersOnlyStringOfSubmittedTextMarginTop,
   10
 );
 let buttonCounter = numericValueOfInitialHeightOfTopBlur;
 
 function lineModeUpButtonFunction() {
-  var selectedFontSize = document.querySelector(
+  const selectedFontSizePx = document.querySelector(
     "#custom-select-font-sizes .select-selected"
   ).innerHTML;
-  var selectedLineHeight = document.querySelector(
+  const selectedLineHeight = document.querySelector(
     "#custom-select-line-heights .select-selected"
   ).innerHTML;
 
-  selectedFontSize = selectedFontSize.replace("px", "");
-  var focusLineHeight = selectedFontSize * selectedLineHeight;
+  const selectedFontSize = selectedFontSizePx.replace("px", "");
+  const focusLineHeight = selectedFontSize * selectedLineHeight;
   if (buttonCounter > numericValueOfSubmittedTextMarginTop) {
     buttonCounter -= focusLineHeight;
   }
@@ -400,27 +400,28 @@ function lineModeUpButtonFunction() {
 
 // Function for line mode down button
 function lineModeDownButtonFunction() {
-  var offsetTopOfSubmittedText = submittedText.offsetTop;
-  var heightOfSubmittedText = submittedText.offsetHeight;
-  var offsetBottomOfSubmittedText =
+  const offsetTopOfSubmittedText = submittedText.offsetTop;
+  const heightOfSubmittedText = submittedText.offsetHeight;
+  const offsetBottomOfSubmittedText =
     offsetTopOfSubmittedText + heightOfSubmittedText;
-  var heightOfReadingPage = document.querySelectorAll(".page")[0].offsetHeight;
-  var heightOfNav = document.querySelector(".nav").offsetHeight;
-  var heightOfVisiblePage = heightOfReadingPage - heightOfNav;
-  var focusLineHeight = window
+  const heightOfReadingPage =
+    document.querySelectorAll(".page")[0].offsetHeight;
+  const heightOfNav = document.querySelector(".nav").offsetHeight;
+  const heightOfVisiblePage = heightOfReadingPage - heightOfNav;
+  let focusLineHeight = window
     .getComputedStyle(focusLine, null)
     .getPropertyValue("height");
-  var numbersOnlyStringOfFocusLineHeight = focusLineHeight.replace(
+  const numbersOnlyStringOfFocusLineHeight = focusLineHeight.replace(
     /[^\d.]/g,
     ""
   );
-  var numericValueOfFocusLineHeight = parseInt(
+  const numericValueOfFocusLineHeight = parseInt(
     numbersOnlyStringOfFocusLineHeight,
     10
   );
   // Function to check if the element's bottom is visible in the viewport
   function isElementBottomVisible(element) {
-    var rect = element.getBoundingClientRect();
+    const rect = element.getBoundingClientRect();
     return (
       rect.bottom >= 0 &&
       rect.bottom <=
@@ -430,31 +431,32 @@ function lineModeDownButtonFunction() {
   }
 
   // Find bottom position of submitted text
-  var rect = submittedText.getBoundingClientRect();
-  var bottomPositionOfSubmittedText = rect.bottom;
+  const rect = submittedText.getBoundingClientRect();
+  const bottomPositionOfSubmittedText = rect.bottom;
+  let bottomLimitOfFocusLine;
   if (offsetBottomOfSubmittedText < heightOfVisiblePage) {
-    var bottomLimitOfFocusLine =
+    bottomLimitOfFocusLine =
       offsetBottomOfSubmittedText - numericValueOfFocusLineHeight;
   } else if (
     offsetBottomOfSubmittedText > heightOfVisiblePage &&
     isElementBottomVisible(submittedText)
   ) {
-    var bottomLimitOfFocusLine =
+    bottomLimitOfFocusLine =
       bottomPositionOfSubmittedText - numericValueOfFocusLineHeight;
   } else {
-    var bottomLimitOfFocusLine =
+    bottomLimitOfFocusLine =
       heightOfVisiblePage - numericValueOfFocusLineHeight * 2;
   }
 
-  var selectedFontSize = document.querySelector(
+  const selectedFontSizePx = document.querySelector(
     "#custom-select-font-sizes .select-selected"
   ).innerHTML;
-  var selectedLineHeight = document.querySelector(
+  const selectedLineHeight = document.querySelector(
     "#custom-select-line-heights .select-selected"
   ).innerHTML;
 
-  selectedFontSize = selectedFontSize.replace("px", "");
-  var focusLineHeight = selectedFontSize * selectedLineHeight;
+  const selectedFontSize = selectedFontSizePx.replace("px", "");
+  focusLineHeight = selectedFontSize * selectedLineHeight;
   if (buttonCounter + 1 < bottomLimitOfFocusLine) {
     // (Add 1 to make up for 0.5 increments when the font size is an odd number and the line height is 1.5.)
     buttonCounter += focusLineHeight;
@@ -462,21 +464,21 @@ function lineModeDownButtonFunction() {
   topBlurForFocusLine.style.height = buttonCounter + "px";
 }
 
-var wrapperForLineModeButtons = document.querySelector(
+const wrapperForLineModeButtons = document.querySelector(
   "#wrapper-for-line-mode-buttons"
 );
-var wrapperForParagraphModeButtons = document.querySelector(
+const wrapperForParagraphModeButtons = document.querySelector(
   "#wrapper-for-paragraph-mode-buttons"
 );
 
-var upButtonForLineMode = document.querySelector("#up-button-for-line-mode");
-var downButtonForLineMode = document.querySelector(
+const upButtonForLineMode = document.querySelector("#up-button-for-line-mode");
+const downButtonForLineMode = document.querySelector(
   "#down-button-for-line-mode"
 );
-var upButtonForParagraphMode = document.querySelector(
+const upButtonForParagraphMode = document.querySelector(
   "#up-button-for-paragraph-mode"
 );
-var downButtonForParagraphMode = document.querySelector(
+const downButtonForParagraphMode = document.querySelector(
   "#down-button-for-paragraph-mode"
 );
 
@@ -488,7 +490,7 @@ function lineMode() {
   wrapperForLineModeButtons.style.display = "block";
   wrapperForParagraphModeButtons.style.display = "none";
 
-  var paragraphs = document.querySelectorAll(".paragraph");
+  const paragraphs = document.querySelectorAll(".paragraph");
 
   paragraphs.forEach((paragraph) => {
     paragraph.classList.remove("blurred-paragraph");
@@ -522,7 +524,7 @@ function paragraphMode() {
   wrapperForLineModeButtons.style.display = "none";
   wrapperForParagraphModeButtons.style.display = "block";
 
-  var paragraphs = document.querySelectorAll(".paragraph");
+  const paragraphs = document.querySelectorAll(".paragraph");
   paragraphs.forEach((paragraph, index) => {
     if (index !== 0) {
       paragraph.classList.add("blurred-paragraph");
@@ -532,7 +534,7 @@ function paragraphMode() {
   // In paragraph mode, change paragraph when down button is clicked
   let currentIndex = 1;
   let nextParagraphIndex = 1;
-  var readingPage = document.querySelectorAll(".page")[0];
+  const readingPage = document.querySelectorAll(".page")[0];
 
   // In paragraph mode, change paragraph when up button is clicked
   function paragraphModeUpButtonFunction() {
@@ -548,7 +550,7 @@ function paragraphMode() {
       }
     }
     if (nextParagraphIndex >= 2 && nextParagraphIndex <= paragraphs.length) {
-      var currentParagraph = paragraphs[nextParagraphIndex - 2];
+      const currentParagraph = paragraphs[nextParagraphIndex - 2];
       readingPage.scrollTo({
         top: currentParagraph.offsetTop - numericValueOfSubmittedTextMarginTop,
         behavior: "smooth",
@@ -569,7 +571,7 @@ function paragraphMode() {
       currentIndex++;
     }
     if (nextParagraphIndex < paragraphs.length) {
-      var nextParagraph = paragraphs[nextParagraphIndex];
+      const nextParagraph = paragraphs[nextParagraphIndex];
 
       readingPage.scrollTo({
         top: nextParagraph.offsetTop - numericValueOfSubmittedTextMarginTop,
@@ -597,7 +599,7 @@ function paragraphMode() {
 
 // Function to change mode
 function selectedModeFunction() {
-  var selectedMode = document.querySelector(
+  const selectedMode = document.querySelector(
     "#custom-select-modes .select-selected"
   ).innerHTML;
   if (selectedMode == "Paragraph") {
@@ -742,11 +744,11 @@ submitButton.addEventListener("touchend", submitButtonStylesFunction);
 let isReadingPageClicked = false;
 
 pagesContainer.addEventListener("click", function (event) {
-  var clickedPage = event.target.closest(".page");
+  const clickedPage = event.target.closest(".page");
 
   if (clickedPage) {
-    var pages = document.querySelectorAll(".page");
-    var pageIndex = Array.from(pages).indexOf(clickedPage);
+    const pages = document.querySelectorAll(".page");
+    const pageIndex = Array.from(pages).indexOf(clickedPage);
 
     if (pageIndex === 0) {
       if (!isReadingPageClicked) {
@@ -770,9 +772,9 @@ function arrowKeyHandler(event) {
 
 // Add hover effect to links (to differentiate between hover and touch, so that
 // hover can end after touch when user navigates outside the document.)
-var links = document.querySelectorAll(".link");
-var kofiButton = document.querySelector(".kofi-button");
-var linksAndKofiButton = Array.from(links).concat(kofiButton);
+const links = document.querySelectorAll(".link");
+const kofiButton = document.querySelector(".kofi-button");
+const linksAndKofiButton = Array.from(links).concat(kofiButton);
 
 linksAndKofiButton.forEach((linkOrKofiButton) => {
   linkOrKofiButton.addEventListener("mouseover", hoverEffect);
