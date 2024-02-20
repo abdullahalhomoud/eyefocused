@@ -234,7 +234,7 @@ function submitTextFunction() {
       "#custom-select-line-heights .select-selected"
     ).innerHTML;
 
-    selectedFontSize = selectedFontSizePx.replace("px", "");
+    selectedFontSize = selectedFontSize.replace("px", "");
     focusLine.style.height = selectedFontSize * selectedLineHeight + "px";
 
     // Add padding-bottom of 1px to focus line if line height of submitted text is 1.25
@@ -325,7 +325,7 @@ fontSizes.onclick = function () {
   submittedText.style.fontSize = selectedFontSize;
 
   // Change size of focus line when font size is changed
-  selectedFontSize = selectedFontSizePx.replace("px", "");
+  selectedFontSize = selectedFontSize.replace("px", "");
   focusLine.style.height = selectedFontSize * selectedLineHeight + "px";
 };
 
@@ -344,7 +344,7 @@ lineHeights.onclick = function () {
   submittedText.style.lineHeight = selectedLineHeight;
 
   // Change size of focus line when line height is changed
-  selectedFontSize = selectedFontSizePx.replace("px", "");
+  selectedFontSize = selectedFontSize.replace("px", "");
   focusLine.style.height = selectedFontSize * selectedLineHeight + "px";
 
   // Add padding-bottom to focus line of 1px if line height of submitted text is 1.25
@@ -390,7 +390,7 @@ function lineModeUpButtonFunction() {
     "#custom-select-line-heights .select-selected"
   ).innerHTML;
 
-  selectedFontSize = selectedFontSizePx.replace("px", "");
+  selectedFontSize = selectedFontSize.replace("px", "");
   const focusLineHeight = selectedFontSize * selectedLineHeight;
   if (buttonCounter > numericValueOfSubmittedTextMarginTop) {
     buttonCounter -= focusLineHeight;
@@ -455,7 +455,7 @@ function lineModeDownButtonFunction() {
     "#custom-select-line-heights .select-selected"
   ).innerHTML;
 
-  selectedFontSize = selectedFontSizePx.replace("px", "");
+  selectedFontSize = selectedFontSize.replace("px", "");
   focusLineHeight = selectedFontSize * selectedLineHeight;
   if (buttonCounter + 1 < bottomLimitOfFocusLine) {
     // (Add 1 to make up for 0.5 increments when the font size is an odd number and the line height is 1.5.)
