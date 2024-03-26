@@ -230,15 +230,16 @@ function submitTextFunction() {
     let selectedFontSize = document.querySelector(
       "#custom-select-font-sizes .select-selected"
     ).innerHTML;
-    const selectedLineHeight = document.querySelector(
+    const selectedLineHeightInnerHTML = document.querySelector(
       "#custom-select-line-heights .select-selected"
     ).innerHTML;
 
     selectedFontSize = selectedFontSize.replace("px", "");
-    focusLine.style.height = selectedFontSize * selectedLineHeight + "px";
+    focusLine.style.height =
+      selectedFontSize * selectedLineHeightInnerHTML + "px";
 
     // Add padding-bottom of 1px to focus line if line height of submitted text is 1.25
-    if (selectedLineHeight === "1.25") {
+    if (selectedLineHeightInnerHTML === "1.25") {
       focusLine.style.paddingBottom = "1px";
     } else {
       focusLine.style.paddingBottom = "";
@@ -308,16 +309,16 @@ fonts.onclick = function () {
   selectedFont.style.fontFamily = selectedFont.innerHTML;
 };
 
-const fontSizes = document.querySelector(
+const selectedFontSizeDiv = document.querySelector(
   "#custom-select-font-sizes .select-items"
 );
 const focusLine = document.querySelector("#focus-line");
 
-fontSizes.onclick = function () {
+selectedFontSizeDiv.onclick = function () {
   let selectedFontSize = document.querySelector(
     "#custom-select-font-sizes .select-selected"
   ).innerHTML;
-  const selectedLineHeight = document.querySelector(
+  const selectedLineHeightInnerHTML = document.querySelector(
     "#custom-select-line-heights .select-selected"
   ).innerHTML;
   // Change font size of preview and submitted text
@@ -326,29 +327,31 @@ fontSizes.onclick = function () {
 
   // Change size of focus line when font size is changed
   selectedFontSize = selectedFontSize.replace("px", "");
-  focusLine.style.height = selectedFontSize * selectedLineHeight + "px";
+  focusLine.style.height =
+    selectedFontSize * selectedLineHeightInnerHTML + "px";
 };
 
-const lineHeights = document.querySelector(
+const selectedLineHeightDiv = document.querySelector(
   "#custom-select-line-heights .select-items"
 );
-lineHeights.onclick = function () {
+selectedLineHeightDiv.onclick = function () {
   let selectedFontSize = document.querySelector(
     "#custom-select-font-sizes .select-selected"
   ).innerHTML;
-  const selectedLineHeight = document.querySelector(
+  const selectedLineHeightInnerHTML = document.querySelector(
     "#custom-select-line-heights .select-selected"
   ).innerHTML;
   // Change line height of preview and submitted text
-  previewContent.style.lineHeight = selectedLineHeight;
-  submittedText.style.lineHeight = selectedLineHeight;
+  previewContent.style.lineHeight = selectedLineHeightInnerHTML;
+  submittedText.style.lineHeight = selectedLineHeightInnerHTML;
 
   // Change size of focus line when line height is changed
   selectedFontSize = selectedFontSize.replace("px", "");
-  focusLine.style.height = selectedFontSize * selectedLineHeight + "px";
+  focusLine.style.height =
+    selectedFontSize * selectedLineHeightInnerHTML + "px";
 
   // Add padding-bottom to focus line of 1px if line height of submitted text is 1.25
-  if (selectedLineHeight === "1.25") {
+  if (selectedLineHeightInnerHTML === "1.25") {
     focusLine.style.paddingBottom = "1px";
   } else {
     focusLine.style.paddingBottom = "";
@@ -356,8 +359,10 @@ lineHeights.onclick = function () {
 };
 
 // Change mode
-const modes = document.querySelector("#custom-select-modes .select-items");
-modes.addEventListener("click", selectedModeFunction);
+const selectedModeDiv = document.querySelector(
+  "#custom-select-modes .select-items"
+);
+selectedModeDiv.addEventListener("click", selectedModeFunction);
 
 // Function for line mode up button
 const topBlurForFocusLine = document.querySelector("#top-blur-for-focus-line");
@@ -386,12 +391,12 @@ function lineModeUpButtonFunction() {
   let selectedFontSize = document.querySelector(
     "#custom-select-font-sizes .select-selected"
   ).innerHTML;
-  const selectedLineHeight = document.querySelector(
+  const selectedLineHeightInnerHTML = document.querySelector(
     "#custom-select-line-heights .select-selected"
   ).innerHTML;
 
   selectedFontSize = selectedFontSize.replace("px", "");
-  const focusLineHeight = selectedFontSize * selectedLineHeight;
+  const focusLineHeight = selectedFontSize * selectedLineHeightInnerHTML;
   if (buttonCounter > numericValueOfSubmittedTextMarginTop) {
     buttonCounter -= focusLineHeight;
   }
@@ -451,12 +456,12 @@ function lineModeDownButtonFunction() {
   let selectedFontSize = document.querySelector(
     "#custom-select-font-sizes .select-selected"
   ).innerHTML;
-  const selectedLineHeight = document.querySelector(
+  const selectedLineHeightInnerHTML = document.querySelector(
     "#custom-select-line-heights .select-selected"
   ).innerHTML;
 
   selectedFontSize = selectedFontSize.replace("px", "");
-  focusLineHeight = selectedFontSize * selectedLineHeight;
+  focusLineHeight = selectedFontSize * selectedLineHeightInnerHTML;
   if (buttonCounter + 1 < bottomLimitOfFocusLine) {
     // (Add 1 to make up for 0.5 increments when the font size is an odd number and the line height is 1.5.)
     buttonCounter += focusLineHeight;
@@ -792,5 +797,72 @@ linksAndKofiButton.forEach((linkOrKofiButton) => {
 
   function unhoverEffect() {
     linkOrKofiButton.classList.remove("hovered");
+  }
+});
+
+// When page reloads, revert selection menus to display default settings (because the settings return to the default but the menus don't reset)
+
+// Revert settings for Font menu
+const selectedFont = document.querySelector(
+  "#custom-select-fonts .select-selected"
+);
+
+selectedFont.textContent = "Arial";
+fontNames.forEach((fontName, index) => {
+  if (index === 1) {
+    fontName.classList.add("same-as-selected");
+  } else {
+    fontName.classList.remove("same-as-selected");
+  }
+});
+
+// Revert settings for Font Size menu
+const selectedFontSize = document.querySelector(
+  "#custom-select-font-sizes .select-selected"
+);
+const fontSizes = document.querySelectorAll(
+  "#custom-select-font-sizes .select-items div"
+);
+
+selectedFontSize.textContent = "16px";
+fontSizes.forEach((fontSize, index) => {
+  if (index === 0) {
+    fontSize.classList.add("same-as-selected");
+  } else {
+    fontSize.classList.remove("same-as-selected");
+  }
+});
+
+// Revert settings for Line Height menu
+const selectedLineHeight = document.querySelector(
+  "#custom-select-line-heights .select-selected"
+);
+const lineHeights = document.querySelectorAll(
+  "#custom-select-line-heights .select-items div"
+);
+
+selectedLineHeight.textContent = "1.25";
+lineHeights.forEach((lineHeight, index) => {
+  if (index === 0) {
+    lineHeight.classList.add("same-as-selected");
+  } else {
+    lineHeight.classList.remove("same-as-selected");
+  }
+});
+
+// Revert settings for Mode menu
+const selectedMode = document.querySelector(
+  "#custom-select-modes .select-selected"
+);
+const modes = document.querySelectorAll(
+  "#custom-select-modes .select-items div"
+);
+
+selectedMode.textContent = "Line";
+modes.forEach((mode, index) => {
+  if (index === 0) {
+    mode.classList.add("same-as-selected");
+  } else {
+    mode.classList.remove("same-as-selected");
   }
 });
